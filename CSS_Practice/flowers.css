@@ -1,0 +1,41 @@
+.card {
+  height: 270px;
+  width: 360px;
+  text-align: center;
+  border: 1px solid black;
+  color: white;
+}
+
+.blankBox {
+  height: 200px;
+}
+
+#white {
+  background-image: url(white.jpg);
+  background-size: cover;
+}
+
+#sun {
+  background-image: url(sunflow.jpg);
+  background-size: cover;
+}
+
+#cosmos {
+  background-image: url(cosmos.jpg);
+  background-size: cover;
+}
+
+#pink {
+  background-image: url(pink.jpg);
+  background-size: cover;
+}
+
+#whiteJas {
+  background-image: url(whiteJasmine.jpg);
+  background-size: cover;
+}
+
+#purple {
+  background-image: url(purple.jpg);
+  background-size: cover;
+}

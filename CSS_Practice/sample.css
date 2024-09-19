@@ -1,0 +1,19 @@
+* {
+  background-color: aliceblue;
+}
+
+#idSelect {
+  color: chartreuse;
+}
+
+.classSelect {
+  color: coral;
+}
+
+div + p {
+  color: deeppink;
+}
+
+#idSelect {
+  color: blue;
+}
