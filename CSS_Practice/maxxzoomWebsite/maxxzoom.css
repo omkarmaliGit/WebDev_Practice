@@ -66,4 +66,5 @@ li {
   top: -32px;
   left: 115px;
   transform: rotate(135deg);
+  z-index: -1;
 }
