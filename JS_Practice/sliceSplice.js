@@ -20,4 +20,4 @@ console.log(array);
 console.log(array.slice(1, 6));
 
 //splice
-console.log(array.splice(-2), array);
+console.log(array.splice(2), array);
