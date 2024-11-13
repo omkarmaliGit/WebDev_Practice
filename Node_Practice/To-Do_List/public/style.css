@@ -1,0 +1,12 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.task {
+  margin: 5px 0;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}

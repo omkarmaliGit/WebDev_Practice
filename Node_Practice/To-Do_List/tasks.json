@@ -1,0 +1,18 @@
+[
+  {
+    "text": "complete project",
+    "completed": true
+  },
+  {
+    "text": "revise project",
+    "completed": false
+  },
+  {
+    "text": "study more about node",
+    "completed": false
+  },
+  {
+    "text": "try something new",
+    "completed": false
+  }
+]
