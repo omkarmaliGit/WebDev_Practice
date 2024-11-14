@@ -13,9 +13,9 @@ fetch("/tasks")
                         ${
                           task.completed
                             ? ""
-                            : `<form style="display:inline;" action="/tasks/${index}/complete" method="POST"><button type="submit">Mark as Complete</button></form>`
+                            : `<form style="display:inline;" action="/tasks/${index}/complete" method="POST"><button class="completeBtn" type="submit">Mark as Complete</button></form>`
                         }
-                        ${`<form style="display:inline;" action="/tasks/${index}" method="POST"><button type="submit">Delete a Task</button></form>`}
+                        ${`<form style="display:inline;" action="/tasks/${index}" method="POST"><button class="deleteBtn" type="submit">Delete a Task</button></form>`}
                     `;
       taskList.appendChild(taskItem);
     });

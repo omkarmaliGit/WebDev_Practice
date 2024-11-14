@@ -1,12 +1,76 @@
 body {
   font-family: Arial, sans-serif;
+  background-color: #f5e7e4;
+  margin-inline: 20px;
 }
 
 .task {
-  margin: 5px 0;
+  margin: 7px 0;
+  font-size: 20px;
 }
 
 .completed {
   text-decoration: line-through;
   color: gray;
+}
+
+#addTaskSec {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#addTaskSec h1 {
+  font-size: 45px;
+  font-family: "Brush Script MT", cursive;
+  margin: 2px 0px;
+}
+
+#addTaskSec form {
+  margin: 10px 0px 20px 0px;
+}
+
+#addTaskSec form input {
+  height: 40px;
+  width: 800px;
+  padding-left: 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 20px;
+}
+
+#addTaskSec form button {
+  height: 40px;
+  width: 200px;
+  font-size: 18px;
+  border: 1px solid gray;
+  border-radius: 20px;
+  background-color: #ffd1c2;
+}
+
+#addTaskSec form button:hover {
+  background-color: #fbae94;
+}
+
+#viewTaskSec h2 {
+  font-size: 30px;
+}
+
+.task span,
+form {
+  margin-right: 10px;
+}
+
+.task form button {
+  border: 1px solid gray;
+  border-radius: 20px;
+}
+
+.completeBtn {
+  background-color: lightgreen;
+}
+
+.deleteBtn {
+  background-color: lightcoral;
 }

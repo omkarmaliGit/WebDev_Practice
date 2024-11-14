@@ -14,5 +14,9 @@
   {
     "text": "try something new",
     "completed": false
+  },
+  {
+    "text": "my new task",
+    "completed": true
   }
 ]
