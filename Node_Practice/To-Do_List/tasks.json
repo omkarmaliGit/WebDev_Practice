@@ -18,5 +18,9 @@
   {
     "text": "my new task",
     "completed": true
+  },
+  {
+    "text": "adding new task",
+    "completed": false
   }
 ]

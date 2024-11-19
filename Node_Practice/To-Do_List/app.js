@@ -36,6 +36,7 @@ app.get("/tasks", (req, res) => {
 
 // Route to add a new task
 app.post("/tasks", (req, res) => {
+  // console.log({ req, body: req.body, data: req.body.text });
   const tasks = loadTasks();
   const newTask = { text: req.body.text, completed: false };
   tasks.push(newTask);
@@ -67,6 +68,7 @@ app.post("/tasks/:index", (req, res) => {
 
 // Start the server
 const PORT = 3000;
-app.listen(PORT, () => {
+app.listen(PORT, (err) => {
+  if (err) console.log("Error in server setup");
   console.log(`Server is running at http://localhost:${PORT}`);
 });
