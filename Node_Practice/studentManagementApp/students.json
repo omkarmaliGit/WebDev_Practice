@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1731915739289,
+    "name": "Omkar",
+    "roll": "24",
+    "class": "TY",
+    "attendance": [
+      {
+        "date": "2024-11-18",
+        "status": "Present"
+      },
+      {
+        "date": "2024-11-23",
+        "status": "Present"
+      }
+    ]
+  },
+  {
+    "id": 1731916833462,
+    "name": "rahul",
+    "roll": "19",
+    "class": "TY",
+    "attendance": [
+      {
+        "date": "2024-11-15",
+        "status": "Present"
+      },
+      {
+        "date": "2024-11-19",
+        "status": "Absent"
+      }
+    ]
+  },
+  {
+    "id": 1731984056840,
+    "name": "gosabi",
+    "roll": "19",
+    "class": "SY",
+    "attendance": []
+  }
+]
