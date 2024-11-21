@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1732162828433,
+    "name": "Ketchup",
+    "description": "kissan fresh tomato ketchup 1kg",
+    "image": "/images/1732096402933-kissan-fresh-tomato-ketchup-1-1-kg.jpg"
+  },
+  {
+    "id": 1732163222308,
+    "name": "Toothpaste",
+    "description": "colgate strong teeth strong you calcium boost toothpaste saver pack 500g",
+    "image": "/images/1732163222307-colgate-strong-teeth-strong-you-calcium-boost-toothpaste-saver-pack-500-g.jpg"
+  },
+  {
+    "id": 1732163390103,
+    "name": "Detergent Powder",
+    "description": "Surf excel easy wash detergent powder 5kg",
+    "image": "/images/1732163390101-surf-excel-easy-wash-detergent-powder-5-kg.jpg"
+  },
+  {
+    "id": 1732163460343,
+    "name": "refined Oil",
+    "description": "Super sarvottam physically refined rice bran oil 1",
+    "image": "/images/1732163460341-super-sarvottam-physically-refined-rice-bran-oil-1.jpg"
+  },
+  {
+    "id": 1732163803189,
+    "name": "Cookies",
+    "description": "lotte creamfilled choco pie 28g pack of 12",
+    "image": "/images/1732163803184-lotte-creamfilled-choco-pie-28-g-pack-of-12.jpg"
+  }
+]
