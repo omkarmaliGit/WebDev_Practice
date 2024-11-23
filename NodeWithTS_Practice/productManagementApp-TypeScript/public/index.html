@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Product Management</h1>
+
+    <!-- Search Bar -->
+    <div id="search-container">
+      <input type="text" id="search" placeholder="Search for a product..." />
+      <button id="search-button">Search</button>
+    </div>
+
+    <!-- Add Product Form -->
+    <form id="add-product-form">
+      <input type="text" name="name" placeholder="Product Name" required />
+      <textarea
+        name="description"
+        placeholder="Product Description"
+        required
+      ></textarea>
+      <input type="file" name="image" required />
+      <button type="submit" id="addProBtn">Add Product</button>
+    </form>
+
+    <!-- Product List -->
+    <table id="product-list">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Product Details -->
+    <div id="product-details" style="display: none">
+      <h2 id="product-name"></h2>
+      <img id="product-image" />
+      <p id="product-description"></p>
+      <button id="back-button">Back to List</button>
+    </div>
+
+    <!-- Popup -->
+    <div id="notification" style="display: none"></div>
+  </body>
+
+  <script src="script.js"></script>
+</html>
