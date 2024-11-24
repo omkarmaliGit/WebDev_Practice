@@ -40,7 +40,6 @@ function saveProducts(products: Array<{ id: number; name: string; description: s
 }
 
 // Routes
-
 // Get all products
 app.get("/products", (req: Request, res: Response) => {
   try {
