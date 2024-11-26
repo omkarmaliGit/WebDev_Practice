@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Media - Login</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <h1>Welcome to Social Media API</h1>
+    <form id="loginForm">
+      <input type="email" placeholder="Email" id="email" required />
+      <input type="password" placeholder="Password" id="password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div id="postsContainer"></div>
+
+    <script>
+      document.getElementById("loginForm").onsubmit = async function (e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const authHeader = "Basic " + btoa(email + ":" + password);
+
+        const response = await fetch("/posts", {
+          headers: { Authorization: authHeader },
+        });
+
+        if (response.ok) {
+          const posts = await response.json();
+          document.getElementById("postsContainer").innerHTML = posts
+            .map(
+              (post) => `
+          <div class="post">
+            <p>${post.content}</p>
+          </div>
+        `
+            )
+            .join("");
+        } else {
+          alert("Invalid credentials!");
+        }
+      };
+    </script>
+  </body>
+</html>
