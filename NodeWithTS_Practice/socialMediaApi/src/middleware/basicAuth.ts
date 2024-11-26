@@ -19,6 +19,7 @@ const basicAuth = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   const [email, password] = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
+  
   const users = readData<{ id: number; email: string; password: string }[]>(USERS_FILE);
 
   const user = users.find((u) => u.email === email);
