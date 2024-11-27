@@ -3,5 +3,10 @@
     "id": 1,
     "email": "jhon@xyz.com",
     "password": "$2b$10$ldfFHSsTW/oON8V3E2Mc/Oh9/Wcfw5ACmegBIVBJNpGpS2yPzoBgW"
+  },
+  {
+    "id": 2,
+    "email": "omkar@xyz.com",
+    "password": "$2b$10$eDULl/mU6E8vRYAuho1Sa.G9AST0bC.9OBaMqFdd1lejX7H4T7VtO"
   }
 ]

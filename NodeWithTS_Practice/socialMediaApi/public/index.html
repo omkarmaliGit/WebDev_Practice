@@ -3,15 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Social Media Feed</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>My Social Media</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>Welcome to the Social Media Feed</h1>
-      <button onclick="logout()">Logout</button>
-      <div id="posts"></div>
-    </div>
-    <script src="scripts.js"></script>
+    <header>
+      <a href="index.html" class="logo">My Social Media</a>
+      <nav>
+        <button id="auth-button" onclick="handleAuthClick()">Login</button>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <!-- Content will be dynamically populated -->
+    </main>
+
+    <script src="script.js"></script>
   </body>
 </html>

@@ -30,4 +30,19 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
     (0, fileHelpers_1.writeData)(USERS_FILE, users);
     res.status(201).json({ message: "User registered successfully" });
 }));
+// Login a user with password verification
+router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    const users = (0, fileHelpers_1.readData)(USERS_FILE);
+    const user = users.find((u) => u.email === email);
+    if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+    }
+    // Compare the provided password with the stored hashed password
+    const isPasswordValid = yield bcrypt_1.default.compare(password, user.password);
+    if (!isPasswordValid) {
+        return res.status(401).json({ message: "Invalid email or password" });
+    }
+    res.status(200).json({ message: "Login successful" });
+}));
 exports.default = router;
