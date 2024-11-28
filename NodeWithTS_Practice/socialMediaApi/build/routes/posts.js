@@ -20,11 +20,14 @@ const POSTS_FILE = "./src/storage/posts.json";
 // Middleware applied to all post routes
 router.use(basicAuth_1.default);
 // Get all posts
-router.get('/', (req, res) => {
+router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const posts = (0, fileHelpers_1.readData)(POSTS_FILE);
-    console.log('Fetched posts:', posts); // Debug log
+    //   console.log('Fetched posts:', posts); // Debug log
+    if (!posts) {
+        return res.status(500).json({ message: "Error loading posts" });
+    }
     res.json(posts);
-});
+}));
 // Create a post
 router.post('/', (req, res) => {
     const { content } = req.body;

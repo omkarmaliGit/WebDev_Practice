@@ -18,7 +18,7 @@ router.use(basicAuth as any);
 // Get all posts
 router.get('/', async (req: Request, res: Response): Promise<any> => {
   const posts = readData<Post[]>(POSTS_FILE);
-  console.log('Fetched posts:', posts); // Debug log
+//   console.log('Fetched posts:', posts); // Debug log
   if (!posts) {
     return res.status(500).json({ message: "Error loading posts" });
   }

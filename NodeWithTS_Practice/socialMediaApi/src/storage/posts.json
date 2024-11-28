@@ -36,5 +36,17 @@
     "userId": 3,
     "content": "2nd post user hello",
     "likes": []
+  },
+  {
+    "id": 7,
+    "userId": 2,
+    "content": "fdsfdsfsdfssd",
+    "likes": []
+  },
+  {
+    "id": 8,
+    "userId": 1,
+    "content": "1st post from jhon",
+    "likes": []
   }
 ]
