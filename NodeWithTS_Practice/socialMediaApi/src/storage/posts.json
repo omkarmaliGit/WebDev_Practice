@@ -6,5 +6,35 @@
     "likes": [
       2
     ]
+  },
+  {
+    "id": 2,
+    "userId": 2,
+    "content": "2nd post",
+    "likes": []
+  },
+  {
+    "id": 3,
+    "userId": 2,
+    "content": "3rd post",
+    "likes": []
+  },
+  {
+    "id": 4,
+    "userId": 2,
+    "content": "4th post",
+    "likes": []
+  },
+  {
+    "id": 5,
+    "userId": 3,
+    "content": "1st post user hello",
+    "likes": []
+  },
+  {
+    "id": 6,
+    "userId": 3,
+    "content": "2nd post user hello",
+    "likes": []
   }
 ]

@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Add event listeners for login and registration forms
+  const loginForm = document.getElementById("login-form");
+  const registerForm = document.getElementById("register-form");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", handleLogin);
+  }
+
+  if (registerForm) {
+    registerForm.addEventListener("submit", handleRegistration);
+  }
+
   const authButton = document.getElementById("auth-button");
   const mainContent = document.getElementById("main-content");
 
@@ -44,7 +56,7 @@ async function handleLogin(event) {
     const result = await response.json();
     if (response.ok) {
       alert("Login successful!");
-      localStorage.setItem("user", JSON.stringify(result.user)); // Save user data
+      localStorage.setItem("user", JSON.stringify({ email, password })); // Save user data
       window.location.href = "index.html";
     } else {
       alert(result.message || "Login failed!");
@@ -96,8 +108,35 @@ function logoutUser() {
 // Fetch and display posts from backend
 async function fetchPosts(container) {
   try {
-    const response = await fetch("/posts"); // Backend endpoint to get posts
-    const posts = await response.json();
+    const user = JSON.parse(localStorage.getItem("user")); // Get user data from localStorage
+
+    // If the user is logged in, send the authorization header with the request
+    const authHeader = user
+      ? `Basic ${btoa(user.email + ":" + user.password)}`
+      : "";
+
+    const response = await fetch("/posts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader, // Add Authorization header here
+      },
+    });
+
+    const rawResponse = await response.text(); // Get raw text from the response
+    console.log("Raw response:", rawResponse); // Log the raw response
+
+    // Try to parse the response as JSON
+    const posts = JSON.parse(rawResponse);
+
+    // const posts = await response.json();
+
+    // Check if posts is an array
+    if (!Array.isArray(posts)) {
+      console.error("Expected an array but got:", posts);
+      container.innerHTML = "<p>Failed to load posts. Invalid data format.</p>";
+      return;
+    }
 
     container.innerHTML = "<h2>Recent Posts</h2>";
     posts.forEach((post) => {
@@ -123,9 +162,17 @@ async function fetchPosts(container) {
 // Handle liking a post
 async function likePost(postId) {
   try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const authHeader = user
+      ? `Basic ${btoa(user.email + ":" + user.password)}`
+      : "";
+
     const response = await fetch(`/posts/${postId}/like`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader, // Include the Authorization header
+      },
     });
 
     const result = await response.json();

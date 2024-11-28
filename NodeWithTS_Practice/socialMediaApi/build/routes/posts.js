@@ -22,20 +22,24 @@ router.use(basicAuth_1.default);
 // Get all posts
 router.get('/', (req, res) => {
     const posts = (0, fileHelpers_1.readData)(POSTS_FILE);
+    console.log('Fetched posts:', posts); // Debug log
     res.json(posts);
 });
 // Create a post
 router.post('/', (req, res) => {
     const { content } = req.body;
     const posts = (0, fileHelpers_1.readData)(POSTS_FILE);
+    // Find the highest post ID
+    const lastPostId = posts.length > 0 ? Math.max(...posts.map(post => post.id)) : 0;
     const newPost = {
-        id: posts.length + 1,
+        id: lastPostId + 1,
         userId: req.userId,
         content,
         likes: [],
     };
     posts.push(newPost);
     (0, fileHelpers_1.writeData)(POSTS_FILE, posts);
+    console.log('New post created:', newPost); // Debug log
     res.status(201).json(newPost);
 });
 // Like a post
@@ -44,6 +48,7 @@ router.post('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, functio
     const posts = (0, fileHelpers_1.readData)(POSTS_FILE);
     const post = posts.find((p) => p.id === parseInt(id));
     if (!post) {
+        console.log('Post not found for like:', id); // Debug log
         return res.status(404).json({ message: "Post not found" });
     }
     if (post.likes.includes(req.userId)) {
@@ -54,5 +59,44 @@ router.post('/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     (0, fileHelpers_1.writeData)(POSTS_FILE, posts);
     res.json(post);
+}));
+// Edit a post
+router.put('/:id/edit', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const { content } = req.body;
+    const posts = (0, fileHelpers_1.readData)(POSTS_FILE);
+    const post = posts.find((p) => p.id === parseInt(id));
+    if (!post) {
+        console.log('Post not found for edit:', id); // Debug log
+        return res.status(404).json({ message: "Post not found" });
+    }
+    if (!content) {
+        return res.status(400).json({ message: "Content is required to update the post" });
+    }
+    post.content = content;
+    post.likes = []; // Optionally reset likes if content is changed
+    (0, fileHelpers_1.writeData)(POSTS_FILE, posts);
+    console.log('Post updated:', post); // Debug log
+    res.json({
+        message: "Post updated successfully",
+        post,
+    });
+}));
+// Delete a post
+router.delete('/:id/delete', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const posts = (0, fileHelpers_1.readData)(POSTS_FILE);
+    const postIndex = posts.findIndex((p) => p.id === parseInt(id));
+    if (postIndex === -1) {
+        console.log('Post not found for delete:', id); // Debug log
+        return res.status(404).json({ message: "Post not found" });
+    }
+    const deletedPost = posts.splice(postIndex, 1);
+    (0, fileHelpers_1.writeData)(POSTS_FILE, posts);
+    console.log('Post deleted:', deletedPost[0]); // Debug log
+    res.json({
+        message: "Post deleted successfully",
+        post: deletedPost[0],
+    });
 }));
 exports.default = router;
