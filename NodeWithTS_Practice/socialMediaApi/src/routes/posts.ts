@@ -87,7 +87,7 @@ router.put('/:id/edit', async (req: Request, res: Response): Promise<any> => {
     }
 
     post.content = content;
-    post.likes = []; // Optionally reset likes if content is changed
+    // post.likes = []; // Optionally reset likes if content is changed
     writeData(POSTS_FILE, posts);
 
     console.log('Post updated:', post); // Debug log

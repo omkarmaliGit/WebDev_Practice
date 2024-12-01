@@ -144,6 +144,7 @@ async function displayFeed() {
         <span>User ID : ${post.userId}</span>
         <span>${post.createdAt}</span>
       </div>
+      <hr>
       <p>${post.content}</p>
       <button onclick="likePost(${post.id})">${post.likes.length} Likes</button>
     `;
@@ -163,7 +164,7 @@ async function displayMyPosts() {
     <!-- <h2>My Posts</h2> -->
     <form id="create-post-form">
       <textarea id="post-content" placeholder="Write something..." required></textarea>
-      <button type="submit">Create Post</button>
+      <button type="submit" id="post-button">Create Post</button>
     </form>
     <div id="my-posts-list"></div>
   `;
@@ -181,10 +182,10 @@ async function displayMyPosts() {
     const postElement = document.createElement("div");
     postElement.className = "post";
     postElement.innerHTML = `
-      <p>${post.userId}</p>
+      <span><p>${post.createdAt}</p></span>
       <p>${post.content}</p>
-      <button onclick="editPost(${post.id})">Edit</button>
-      <button onclick="deletePost(${post.id})">Delete</button>
+      <button id="edit" onclick="editPost(${post.id})">Edit</button>
+      <button id="delete" onclick="deletePost(${post.id})">Delete</button>
     `;
     myPostsContainer.appendChild(postElement);
   });
@@ -275,6 +276,65 @@ async function likePost(postId) {
     }
   } catch (error) {
     console.error("Error liking post:", error);
+    alert("An error occurred. Please try again.");
+  }
+}
+
+// Edit a post
+async function editPost(postId) {
+  const newContent = prompt("Enter new content for the post:");
+  if (!newContent) return; // Exit if the user cancels the prompt
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const authHeader = `Basic ${btoa(user.email + ":" + user.password)}`;
+
+  try {
+    const response = await fetch(`/posts/${postId}/edit`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader,
+      },
+      body: JSON.stringify({ content: newContent }),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Post updated successfully!");
+      displayMyPosts(); // Refresh the user's posts
+    } else {
+      alert(result.message || "Failed to update post.");
+    }
+  } catch (error) {
+    console.error("Error updating post:", error);
+    alert("An error occurred. Please try again.");
+  }
+}
+
+// Delete a post
+async function deletePost(postId) {
+  if (!confirm("Are you sure you want to delete this post?")) return; // Confirm deletion
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const authHeader = `Basic ${btoa(user.email + ":" + user.password)}`;
+
+  try {
+    const response = await fetch(`/posts/${postId}/delete`, {
+      method: "DELETE",
+      headers: {
+        Authorization: authHeader,
+      },
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Post deleted successfully!");
+      displayMyPosts(); // Refresh the user's posts
+    } else {
+      alert(result.message || "Failed to delete post.");
+    }
+  } catch (error) {
+    console.error("Error deleting post:", error);
     alert("An error occurred. Please try again.");
   }
 }

@@ -4,7 +4,8 @@
     "userId": 2,
     "content": "Hello this is my first post",
     "likes": [
-      2
+      2,
+      3
     ]
   },
   {
@@ -28,13 +29,7 @@
   {
     "id": 5,
     "userId": 3,
-    "content": "1st post user hello",
-    "likes": []
-  },
-  {
-    "id": 6,
-    "userId": 3,
-    "content": "2nd post user hello",
+    "content": "1st post from user hello",
     "likes": []
   },
   {
