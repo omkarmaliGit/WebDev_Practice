@@ -43,6 +43,6 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     if (!isPasswordValid) {
         return res.status(401).json({ message: "Invalid email or password" });
     }
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ message: "Login successful", userId: user.id });
 }));
 exports.default = router;

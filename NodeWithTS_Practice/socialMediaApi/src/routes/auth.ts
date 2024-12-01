@@ -45,7 +45,7 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
         return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ message: "Login successful", userId: user.id });
 });
 
 export default router;

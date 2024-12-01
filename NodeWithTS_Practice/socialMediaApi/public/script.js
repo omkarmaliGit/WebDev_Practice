@@ -54,7 +54,11 @@ async function handleLogin(event) {
     const result = await response.json();
     if (response.ok) {
       alert("Login successful!");
-      localStorage.setItem("user", JSON.stringify({ email, password })); // Save user data
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ email, password, userId: result.userId })
+      );
+      // Save user data
       window.location.href = "index.html";
     } else {
       alert(result.message || "Login failed!");
@@ -129,7 +133,7 @@ function displayNavigation() {
 // Fetch and display feed posts
 async function displayFeed() {
   const container = document.getElementById("content-section");
-  // container.innerHTML = "<h2>Feed</h2>";
+  container.innerHTML = "";
 
   const posts = await fetchPosts(false);
   posts.forEach((post) => {
@@ -177,6 +181,7 @@ async function displayMyPosts() {
     const postElement = document.createElement("div");
     postElement.className = "post";
     postElement.innerHTML = `
+      <p>${post.userId}</p>
       <p>${post.content}</p>
       <button onclick="editPost(${post.id})">Edit</button>
       <button onclick="deletePost(${post.id})">Delete</button>
@@ -189,6 +194,11 @@ async function displayMyPosts() {
 async function fetchPosts(userOnly) {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.userId) {
+      alert("User information not found. Please log in again.");
+      return [];
+    }
+
     const authHeader = user
       ? `Basic ${btoa(user.email + ":" + user.password)}`
       : "";
@@ -198,10 +208,12 @@ async function fetchPosts(userOnly) {
     });
 
     const posts = await response.json();
-    if (userOnly) {
+
+    if (userOnly && user.userId) {
       return posts.filter((post) => post.userId === user.userId);
+    } else {
+      return posts;
     }
-    return posts;
   } catch (error) {
     console.error("Error fetching posts:", error);
     return [];
