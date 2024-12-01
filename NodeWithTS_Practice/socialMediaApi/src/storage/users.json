@@ -18,5 +18,10 @@
     "id": 4,
     "email": "newuser@xyz.com",
     "password": "$2b$10$Y0pFr3iR8fzBuyBx9GMdz.w6xBX0x2nJ4aZd1OGjcrZx8ku1MA70K"
+  },
+  {
+    "id": 5,
+    "email": "newuser2@gmail.com",
+    "password": "$2b$10$WVjCaeP1qmXWl7MnE.nhyegmPbC6.Tki.2x4U6cco8e6jD1J33iUq"
   }
 ]

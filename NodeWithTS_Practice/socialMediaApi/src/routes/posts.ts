@@ -8,6 +8,7 @@ const POSTS_FILE = "./src/storage/posts.json";
 interface Post {
   id: number;
   userId: number;
+  createdAt: string;
   content: string;
   likes: number[];
 }
@@ -36,6 +37,7 @@ router.post('/', (req: Request, res: Response) => {
     const newPost: Post = {
         id: lastPostId + 1,
         userId: req.userId!,
+        createdAt: new Date().toLocaleDateString(),
         content,
         likes: [],
     };

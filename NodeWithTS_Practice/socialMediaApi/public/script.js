@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Add event listeners for login and registration forms
+  const loginForm = document.getElementById("login-form");
+  const registerForm = document.getElementById("register-form");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", handleLogin);
+  }
+
+  if (registerForm) {
+    registerForm.addEventListener("submit", handleRegistration);
+  }
+
   const authButton = document.getElementById("auth-button");
   const mainContent = document.getElementById("main-content");
 
@@ -26,6 +38,59 @@ function handleAuthClick() {
   }
 }
 
+// Handle Login
+async function handleLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  try {
+    const response = await fetch("/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Login successful!");
+      localStorage.setItem("user", JSON.stringify({ email, password })); // Save user data
+      window.location.href = "index.html";
+    } else {
+      alert(result.message || "Login failed!");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred. Please try again.");
+  }
+}
+
+// Handle Registration
+async function handleRegistration(event) {
+  event.preventDefault();
+  const email = document.getElementById("register-email").value;
+  const password = document.getElementById("register-password").value;
+
+  try {
+    const response = await fetch("/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Registration successful! Please log in.");
+      window.location.href = "login.html";
+    } else {
+      alert(result.message || "Registration failed!");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred. Please try again.");
+  }
+}
+
 // Check if user is logged in
 function isLoggedIn() {
   return localStorage.getItem("user") !== null;
@@ -42,8 +107,8 @@ function logoutUser() {
 function displayNavigation() {
   const mainContent = document.getElementById("main-content");
   mainContent.innerHTML = `
-    <nav>
-      <button id="feed-btn">Feed</button>
+    <nav class="nav-buttons">
+      <button id="feed-btn" class="active">Feed</button>
       <button id="my-posts-btn">My Posts</button>
     </nav>
     <div id="content-section"></div>
@@ -64,29 +129,34 @@ function displayNavigation() {
 // Fetch and display feed posts
 async function displayFeed() {
   const container = document.getElementById("content-section");
-  container.innerHTML = "<h2>Feed</h2>";
+  // container.innerHTML = "<h2>Feed</h2>";
 
-  const posts = await fetchPosts();
+  const posts = await fetchPosts(false);
   posts.forEach((post) => {
     const postElement = document.createElement("div");
     postElement.className = "post";
     postElement.innerHTML = `
       <div class="post-header">
-        <span>${post.userId}</span>
-        <span>${new Date(post.createdAt).toLocaleString()}</span>
+        <span>User ID : ${post.userId}</span>
+        <span>${post.createdAt}</span>
       </div>
       <p>${post.content}</p>
       <button onclick="likePost(${post.id})">${post.likes.length} Likes</button>
     `;
     container.appendChild(postElement);
   });
+
+  const feedBtn = document.getElementById("feed-btn");
+  feedBtn.className = "active";
+  const myPostsBtn = document.getElementById("my-posts-btn");
+  feedBtn.className = "";
 }
 
 // Fetch and display user-specific posts
 async function displayMyPosts() {
   const container = document.getElementById("content-section");
   container.innerHTML = `
-    <h2>My Posts</h2>
+    <!-- <h2>My Posts</h2> -->
     <form id="create-post-form">
       <textarea id="post-content" placeholder="Write something..." required></textarea>
       <button type="submit">Create Post</button>
@@ -116,7 +186,7 @@ async function displayMyPosts() {
 }
 
 // Fetch posts from the backend (filtered if needed)
-async function fetchPosts(userOnly = false) {
+async function fetchPosts(userOnly) {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     const authHeader = user
@@ -168,3 +238,31 @@ async function createPost(event) {
 }
 
 // Add backend interaction for like, edit, and delete functions later
+// Handle liking a post
+async function likePost(postId) {
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const authHeader = user
+      ? `Basic ${btoa(user.email + ":" + user.password)}`
+      : "";
+
+    const response = await fetch(`/posts/${postId}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader, // Include the Authorization header
+      },
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+      alert("Post liked successfully!");
+      window.location.reload(); // Reload to update likes
+    } else {
+      alert(result.message || "Failed to like post.");
+    }
+  } catch (error) {
+    console.error("Error liking post:", error);
+    alert("An error occurred. Please try again.");
+  }
+}

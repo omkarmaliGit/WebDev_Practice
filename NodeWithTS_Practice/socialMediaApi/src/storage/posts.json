@@ -48,5 +48,42 @@
     "userId": 1,
     "content": "1st post from jhon",
     "likes": []
+  },
+  {
+    "id": 9,
+    "userId": 1,
+    "content": "tell me user id",
+    "likes": [
+      5
+    ]
+  },
+  {
+    "id": 10,
+    "userId": 1,
+    "content": "sdsddsdssd",
+    "likes": []
+  },
+  {
+    "id": 11,
+    "userId": 5,
+    "content": "helloji",
+    "likes": [
+      5,
+      2
+    ]
+  },
+  {
+    "id": 12,
+    "userId": 2,
+    "createdAt": "1/12/2024",
+    "content": "ky tr ki",
+    "likes": []
+  },
+  {
+    "id": 13,
+    "userId": 1,
+    "createdAt": "1/12/2024",
+    "content": "dsfsd",
+    "likes": []
   }
 ]

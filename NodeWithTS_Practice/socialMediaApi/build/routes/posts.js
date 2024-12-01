@@ -37,6 +37,7 @@ router.post('/', (req, res) => {
     const newPost = {
         id: lastPostId + 1,
         userId: req.userId,
+        createdAt: new Date().toLocaleDateString(),
         content,
         likes: [],
     };
