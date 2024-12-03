@@ -146,7 +146,7 @@ async function displayFeed() {
       </div>
       <hr>
       <p>${post.content}</p>
-      <button onclick="likePost(${post.id})">${post.likes.length} Likes</button>
+      <button id="likeBtn" onclick="likePost(${post.id})">${post.likes.length} Likes</button>
     `;
     container.appendChild(postElement);
   });

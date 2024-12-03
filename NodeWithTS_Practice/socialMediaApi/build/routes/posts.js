@@ -78,7 +78,7 @@ router.put('/:id/edit', (req, res) => __awaiter(void 0, void 0, void 0, function
         return res.status(400).json({ message: "Content is required to update the post" });
     }
     post.content = content;
-    post.likes = []; // Optionally reset likes if content is changed
+    // post.likes = []; // Optionally reset likes if content is changed
     (0, fileHelpers_1.writeData)(POSTS_FILE, posts);
     console.log('Post updated:', post); // Debug log
     res.json({
