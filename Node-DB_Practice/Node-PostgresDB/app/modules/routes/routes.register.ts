@@ -11,10 +11,6 @@ export const registerRoutes = (app: Application) => {
   app.use(cors());
   app.use(json());
 
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log("MIDDLEWARE CALLED");
-  });
-
   // app.use(authorize(excludedPaths));
 
   for (let route of routes) {

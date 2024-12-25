@@ -14,6 +14,14 @@ const userSchema = new Schema({
     type: Number,
     require: true,
   },
+  userName: {
+    type: String,
+    require: true,
+  },
+  password: {
+    type: String,
+    require: true,
+  },
 });
 
 type IUserDocument = Document & IUser;
