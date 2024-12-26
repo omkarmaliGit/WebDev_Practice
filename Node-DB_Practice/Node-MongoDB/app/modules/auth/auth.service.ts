@@ -4,14 +4,13 @@ import { IExcludedPaths } from "./auth.types";
 
 export const createToken = (payload: any) => {
   const { JWT_SECRET } = process.env;
-  const token = sign(payload, JWT_SECRET || "");
-
+  const token = sign(payload, JWT_SECRET || "0123456789");
   return token;
 };
 
 export const verifyToken = (token: string) => {
   const { JWT_SECRET } = process.env;
-  const payload = verify(token, JWT_SECRET || "");
+  const payload = verify(token, JWT_SECRET || "0123456789");
   return payload;
 };
 
@@ -24,7 +23,7 @@ export const authorize = (excludedPaths: IExcludedPaths[]) => {
         return next();
       }
 
-      const token = req.headers.authorization || "";
+      const token = req.headers.authorization?.split(" ")[1] || "";
 
       const payload = verifyToken(token);
 
@@ -32,7 +31,7 @@ export const authorize = (excludedPaths: IExcludedPaths[]) => {
 
       next();
     } catch (e) {
-      next({ statusCode: 403, message: "UNAUTHORIZED" });
+      next({ statusCode: 403, message: "UNAUTHORIZED {invalid token}" });
     }
   };
 };
@@ -43,6 +42,9 @@ export const permit = (permittedRoles: string[]) => {
       return next();
     }
 
-    next({ statusCode: 403, message: "UNAUTHORIZED" });
+    next({
+      statusCode: 403,
+      message: "UNAUTHORIZED {permission not for this user role}",
+    });
   };
 };

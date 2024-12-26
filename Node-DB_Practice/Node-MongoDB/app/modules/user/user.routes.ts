@@ -2,20 +2,26 @@ import { Router, Request, Response, NextFunction } from "express";
 import { ResponseHandler } from "../../utility/response.handler";
 import userService from "./user.service";
 import { Types } from "mongoose";
+import { permit } from "../auth/auth.service";
 
 export const UserRouter = Router();
 
-UserRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await userService.userGet();
-    res.send(new ResponseHandler(result, "showing all users"));
-  } catch (e) {
-    next(e);
+UserRouter.get(
+  "/",
+  permit(["admin"]),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await userService.userGet();
+      res.send(new ResponseHandler(result, "showing all users"));
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 
 UserRouter.get(
   "/:id",
+  permit(["user", "admin", "semiAdmin"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const objId = req.params.id;
@@ -34,6 +40,7 @@ UserRouter.get(
 
 UserRouter.post(
   "/",
+  permit(["user", "admin", "semiAdmin"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await userService.userAdd(req.body);
@@ -46,6 +53,7 @@ UserRouter.post(
 
 UserRouter.delete(
   "/:id",
+  permit(["user", "admin", "semiAdmin"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const objId = req.params.id;
@@ -64,6 +72,7 @@ UserRouter.delete(
 
 UserRouter.put(
   "/:id",
+  permit(["user", "admin", "semiAdmin"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const objId = req.params.id;

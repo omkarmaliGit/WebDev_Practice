@@ -1,11 +1,15 @@
 import express from "express";
 import { registerRoutes } from "./modules/routes/routes.register";
 import { connectToMongo } from "./connections/mongo.connect";
+import { createToken } from "./modules/auth/auth.service";
 
 export const startServer = async () => {
   try {
     const app = express();
     await connectToMongo();
+
+    const token = createToken({ userName: "omkar", role: "admin" });
+    console.log(token);
 
     registerRoutes(app);
 

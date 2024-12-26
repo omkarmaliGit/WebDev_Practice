@@ -4,4 +4,5 @@ export interface IUser {
   age: number;
   userName: string;
   password: string;
+  role: string;
 }
