@@ -19,6 +19,8 @@ export const registerRoutes = (app: Application) => {
 
   // Error Handling Middleware
   app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    res.status(err.statusCode || 500).send(new ResponseHandler(null, err));
+    res
+      .status(err.statusCode || 500)
+      .send(new ResponseHandler(null, null, err));
   });
 };
