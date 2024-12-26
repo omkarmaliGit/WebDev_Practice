@@ -4,9 +4,10 @@ import userService from "./user.service";
 
 export const UserRouter = Router();
 
-UserRouter.get("/", (req: Request, res: Response, next: NextFunction) => {
+UserRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = userService.userGet();
+    const result = await userService.userGet();
+    console.log(result);
     res.send(new ResponseHandler(result));
   } catch (e) {
     next(e);
