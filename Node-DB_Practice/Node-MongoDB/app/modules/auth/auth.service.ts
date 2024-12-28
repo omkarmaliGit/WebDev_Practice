@@ -4,7 +4,9 @@ import { IExcludedPaths } from "./auth.types";
 
 export const createToken = (payload: any) => {
   const { JWT_SECRET } = process.env;
-  const token = sign(payload, JWT_SECRET || "0123456789");
+  const token = sign(payload, JWT_SECRET || "0123456789", {
+    expiresIn: "2h",
+  });
   return token;
 };
 

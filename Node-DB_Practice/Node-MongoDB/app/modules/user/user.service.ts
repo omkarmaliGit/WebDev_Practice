@@ -3,8 +3,8 @@ import { IUser } from "./user.types";
 import bcrypt from "bcrypt";
 
 const userGet = async () => {
-  const user = await userRepo.get();
-  return user;
+  const users = await userRepo.get();
+  return users;
 };
 
 const userGetOne = async (_id: any) => {
@@ -21,7 +21,7 @@ const userAdd = async (userData: IUser) => {
     age: userData.age,
     userName: userData.userName,
     password: hashedPassword,
-    role: "user",
+    role: "USER",
   };
 
   const user = await userRepo.add(newUser);
@@ -42,7 +42,7 @@ const userUpdate = async (_id: any, userData: IUser) => {
     age: userData.age,
     userName: userData.userName,
     password: hashedPassword,
-    role: "user",
+    role: "USER",
   };
 
   const user = await userRepo.update(_id, newUser);

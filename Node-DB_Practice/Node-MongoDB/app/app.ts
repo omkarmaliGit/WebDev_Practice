@@ -8,9 +8,6 @@ export const startServer = async () => {
     const app = express();
     await connectToMongo();
 
-    const token = createToken({ userName: "omkar", role: "admin" });
-    console.log(token);
-
     registerRoutes(app);
 
     const { PORT } = process.env;
