@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { sign, verify } from "jsonwebtoken";
 import { IExcludedPaths } from "./auth.types";
+import { IUser } from "../user/user.types";
+import userService from "../user/user.service";
 
 export const createToken = (payload: any) => {
   const { JWT_SECRET } = process.env;
@@ -49,4 +51,35 @@ export const permit = (permittedRoles: string[]) => {
       message: "UNAUTHORIZED {permission not for this user role}",
     });
   };
+};
+
+export const login = async (reqBody: any) => {
+  const { userName, password } = reqBody;
+  const users: IUser[] = await userService.userGet();
+
+  const user = users.find((u) => u.userName === userName);
+  if (!user) {
+    return res.status(401).json({ message: "User Not Found" });
+  }
+
+  // Compare the provided password with the stored hashed password
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
+
+  const token = createToken({ userName: user.userName, role: user.role });
+  return token;
+};
+
+export const register = async (reqBody: any) => {
+  const { userName } = reqBody;
+  const users: IUser[] = await userService.userGet();
+
+  if (users.find((user) => user.userName === userName)) {
+    return res.status(400).json({ message: "userName already exists" });
+  }
+
+  const result = await userService.userAdd(reqBody);
+  return result;
 };
