@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response, Router } from "express";
-import bcrypt from "bcrypt";
 import { IUser } from "../user/user.types";
 import { ResponseHandler } from "../../utility/response.handler";
 import { createToken, login, register } from "./auth.service";
@@ -30,6 +29,7 @@ AuthRouter.post(
   async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     try {
       const token = await login(req.body);
+      console.log("after", token);
       res.send(
         new ResponseHandler({
           Token: token,

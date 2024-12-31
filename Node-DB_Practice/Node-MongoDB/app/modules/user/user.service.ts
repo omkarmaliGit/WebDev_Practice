@@ -22,6 +22,7 @@ const userAdd = async (userData: IUser) => {
     userName: userData.userName,
     password: hashedPassword,
     role: "USER",
+    deletedAt: null,
   };
 
   const user = await userRepo.add(newUser);
@@ -43,6 +44,7 @@ const userUpdate = async (_id: any, userData: IUser) => {
     userName: userData.userName,
     password: hashedPassword,
     role: "USER",
+    deletedAt: userData.deletedAt,
   };
 
   const user = await userRepo.update(_id, newUser);

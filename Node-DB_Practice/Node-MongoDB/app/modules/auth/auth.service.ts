@@ -3,6 +3,7 @@ import { sign, verify } from "jsonwebtoken";
 import { IExcludedPaths } from "./auth.types";
 import { IUser } from "../user/user.types";
 import userService from "../user/user.service";
+import bcrypt from "bcrypt";
 
 export const createToken = (payload: any) => {
   const { JWT_SECRET } = process.env;
@@ -53,33 +54,49 @@ export const permit = (permittedRoles: string[]) => {
   };
 };
 
-export const login = async (reqBody: any) => {
-  const { userName, password } = reqBody;
-  const users: IUser[] = await userService.userGet();
+export const register = async (reqBody: any) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userName } = reqBody;
+      const users: IUser[] = await userService.userGet();
 
-  const user = users.find((u) => u.userName === userName);
-  if (!user) {
-    return res.status(401).json({ message: "User Not Found" });
-  }
+      if (users.find((user) => user.userName === userName)) {
+        return res.status(400).json({ message: "userName already exists" });
+      }
 
-  // Compare the provided password with the stored hashed password
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    return res.status(401).json({ message: "Invalid email or password" });
-  }
-
-  const token = createToken({ userName: user.userName, role: user.role });
-  return token;
+      const result = await userService.userAdd(reqBody);
+      return result;
+    } catch (e) {
+      next({ statusCode: 403, message: "Registration Failed" });
+    }
+  };
 };
 
-export const register = async (reqBody: any) => {
-  const { userName } = reqBody;
-  const users: IUser[] = await userService.userGet();
+export const login = async (reqBody: any) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log("inside login");
+      const { userName, password } = reqBody;
+      const users: IUser[] = await userService.userGet();
+      console.log("inside user");
 
-  if (users.find((user) => user.userName === userName)) {
-    return res.status(400).json({ message: "userName already exists" });
-  }
+      const user = users.find((u) => u.userName === userName);
+      if (!user) {
+        return res.status(401).json({ message: "User Not Found" });
+      }
+      console.log("inside password");
 
-  const result = await userService.userAdd(reqBody);
-  return result;
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+      console.log("inside token");
+
+      const token = createToken({ userName: user.userName, role: user.role });
+      console.log("service after", token);
+      return token;
+    } catch (e) {
+      next({ statusCode: 403, message: "Login Failed" });
+    }
+  };
 };

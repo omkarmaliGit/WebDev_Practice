@@ -11,7 +11,7 @@ export const registerRoutes = (app: Application) => {
   app.use(cors());
   app.use(json());
 
-  app.use(authorize(excludedPaths));
+  // app.use(authorize(excludedPaths));
 
   for (let route of routes) {
     app.use(route.path, route.router);
@@ -19,8 +19,6 @@ export const registerRoutes = (app: Application) => {
 
   // Error Handling Middleware
   app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    res
-      .status(err.statusCode || 500)
-      .send(new ResponseHandler(null, null, err));
+    res.status(err.statusCode || 500).send(new ResponseHandler(null, err));
   });
 };

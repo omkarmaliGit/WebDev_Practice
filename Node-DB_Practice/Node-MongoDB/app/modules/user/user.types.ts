@@ -7,4 +7,11 @@ export interface IUser {
   userName: string;
   password: string;
   role: role;
+  deletedAt: Date | null;
 }
+
+export const USER_ROLE = {
+  USER: "USER",
+  ADMIN: "ADMIN",
+  SEMIADMIN: "SEMIADMIN",
+};

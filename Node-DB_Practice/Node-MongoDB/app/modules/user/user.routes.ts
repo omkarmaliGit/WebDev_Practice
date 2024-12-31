@@ -8,7 +8,7 @@ export const UserRouter = Router();
 
 UserRouter.get(
   "/",
-  permit(["ADMIN", "SEMIADMIN"]),
+  // permit(["ADMIN", "SEMIADMIN"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await userService.userGet();
@@ -21,7 +21,7 @@ UserRouter.get(
 
 UserRouter.get(
   "/:id",
-  permit(["USER", "ADMIN", "SEMIADMIN"]),
+  // permit(["USER", "ADMIN", "SEMIADMIN"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const objId = req.params.id;
@@ -40,7 +40,7 @@ UserRouter.get(
 
 UserRouter.post(
   "/",
-  permit(["ADMIN", "SEMIADMIN"]),
+  // permit(["ADMIN", "SEMIADMIN"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await userService.userAdd(req.body);
@@ -53,7 +53,7 @@ UserRouter.post(
 
 UserRouter.delete(
   "/:id",
-  permit(["ADMIN"]),
+  // permit(["ADMIN"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const objId = req.params.id;
@@ -62,7 +62,7 @@ UserRouter.delete(
       }
       const userId: Types.ObjectId = new Types.ObjectId(objId);
       const result = await userService.userRemove(userId);
-      console.log(result);
+      // console.log(result);
       res.send(new ResponseHandler(result, "user deleted successfully"));
     } catch (e) {
       next(e);
@@ -72,7 +72,7 @@ UserRouter.delete(
 
 UserRouter.put(
   "/:id",
-  permit(["USER"]),
+  // permit(["USER"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const objId = req.params.id;

@@ -26,6 +26,10 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
+  deletedAt: {
+    type: Date,
+    require: true,
+  },
 });
 
 type IUserDocument = Document & IUser;
