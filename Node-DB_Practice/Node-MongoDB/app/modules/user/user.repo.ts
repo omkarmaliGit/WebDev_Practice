@@ -1,24 +1,31 @@
+import { Types } from "mongoose";
 import userModel from "./user.schema";
 import { IUser } from "./user.types";
 
-const get = () => userModel.find({ deletedAt: null });
+const getUsers_repo = () => userModel.find({ deletedAt: null });
 
-const getOne = (_id: any) => userModel.findById(_id, { deletedAt: null });
+const getOneUser_repo = (searchKey: Record<string, any>) => {
+  if (searchKey._id) {
+    return userModel.findById({ ...searchKey, deletedAt: null });
+  } else {
+    return userModel.findOne({ ...searchKey, deletedAt: null });
+  }
+};
 
-const add = (userData: IUser) => userModel.create(userData);
+const addUser_repo = (userData: IUser) => userModel.create(userData);
 
-const remove = (_id: any) =>
+const removeUser_repo = (_id: any) =>
   userModel.findByIdAndUpdate(_id, { deletedAt: new Date() });
 
-const update = (_id: any, userData: IUser) =>
+const updateUser_repo = (_id: any, userData: IUser) =>
   userModel.findByIdAndUpdate(_id, userData);
 
-// const get = () => userModel.find({ firtName: "omkar" });
+// const get = () => userModel.find({ firtName: "omkar"});
 
 export default {
-  get,
-  getOne,
-  add,
-  remove,
-  update,
+  getUsers_repo,
+  getOneUser_repo,
+  addUser_repo,
+  removeUser_repo,
+  updateUser_repo,
 };

@@ -2,17 +2,17 @@ import userRepo from "./user.repo";
 import { IUser } from "./user.types";
 import bcrypt from "bcrypt";
 
-const userGet = async () => {
-  const users = await userRepo.get();
+const getUsers_service = async () => {
+  const users = await userRepo.getUsers_repo();
   return users;
 };
 
-const userGetOne = async (_id: any) => {
-  const user = await userRepo.getOne(_id);
+const getOneUser_service = async (searchKey: Record<string, any>) => {
+  const user = await userRepo.getOneUser_repo(searchKey);
   return user;
 };
 
-const userAdd = async (userData: IUser) => {
+const addUser_service = async (userData: IUser) => {
   const hashedPassword = await bcrypt.hash(userData.password, 10);
 
   const newUser: IUser = {
@@ -25,16 +25,16 @@ const userAdd = async (userData: IUser) => {
     deletedAt: null,
   };
 
-  const user = await userRepo.add(newUser);
+  const user = await userRepo.addUser_repo(newUser);
   return user;
 };
 
-const userRemove = async (_id: any) => {
-  const user = await userRepo.remove(_id);
+const removeUser_service = async (_id: any) => {
+  const user = await userRepo.removeUser_repo(_id);
   return user;
 };
 
-const userUpdate = async (_id: any, userData: IUser) => {
+const updateUser_service = async (_id: any, userData: IUser) => {
   const hashedPassword = await bcrypt.hash(userData.password, 10);
 
   const newUser: IUser = {
@@ -47,14 +47,14 @@ const userUpdate = async (_id: any, userData: IUser) => {
     deletedAt: userData.deletedAt,
   };
 
-  const user = await userRepo.update(_id, newUser);
+  const user = await userRepo.updateUser_repo(_id, newUser);
   return user;
 };
 
 export default {
-  userGet,
-  userGetOne,
-  userAdd,
-  userRemove,
-  userUpdate,
+  getUsers_service,
+  getOneUser_service,
+  addUser_service,
+  removeUser_service,
+  updateUser_service,
 };

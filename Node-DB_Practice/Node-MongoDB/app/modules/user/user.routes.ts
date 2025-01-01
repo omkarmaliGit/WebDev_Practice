@@ -11,7 +11,7 @@ UserRouter.get(
   // permit(["ADMIN", "SEMIADMIN"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await userService.userGet();
+      const result = await userService.getUsers_service();
       res.send(new ResponseHandler(result, "showing all users"));
     } catch (e) {
       next(e);
@@ -28,9 +28,9 @@ UserRouter.get(
       if (!Types.ObjectId.isValid(objId)) {
         throw new Error("Invalid ObjectId format");
       }
-      const userId: Types.ObjectId = new Types.ObjectId(objId);
-      const result = await userService.userGetOne(userId);
-      console.log(result);
+      const _id: Types.ObjectId = new Types.ObjectId(objId);
+
+      const result = await userService.getOneUser_service({ _id });
       res.send(new ResponseHandler(result, "showing single user"));
     } catch (e) {
       next(e);
@@ -43,7 +43,7 @@ UserRouter.post(
   // permit(["ADMIN", "SEMIADMIN"]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await userService.userAdd(req.body);
+      const result = await userService.addUser_service(req.body);
       res.send(new ResponseHandler(result, "user added successfully"));
     } catch (e) {
       next(e);
@@ -61,7 +61,7 @@ UserRouter.delete(
         throw new Error("Invalid ObjectId format");
       }
       const userId: Types.ObjectId = new Types.ObjectId(objId);
-      const result = await userService.userRemove(userId);
+      const result = await userService.removeUser_service(userId);
       // console.log(result);
       res.send(new ResponseHandler(result, "user deleted successfully"));
     } catch (e) {
@@ -80,7 +80,7 @@ UserRouter.put(
         throw new Error("Invalid ObjectId format");
       }
       const userId: Types.ObjectId = new Types.ObjectId(objId);
-      const result = await userService.userUpdate(userId, req.body);
+      const result = await userService.updateUser_service(userId, req.body);
       console.log(result);
       res.send(new ResponseHandler(result, "user updated successfully"));
     } catch (e) {

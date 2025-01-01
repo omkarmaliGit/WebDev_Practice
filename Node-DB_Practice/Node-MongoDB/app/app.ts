@@ -1,7 +1,6 @@
 import express from "express";
 import { registerRoutes } from "./modules/routes/routes.register";
 import { connectToMongo } from "./connections/mongo.connect";
-import { createToken } from "./modules/auth/auth.service";
 
 export const startServer = async () => {
   try {
@@ -12,7 +11,9 @@ export const startServer = async () => {
 
     const { PORT } = process.env;
 
-    app.listen(PORT, () => console.log(`Server started on Port: ${PORT}`));
+    app.listen(PORT, () =>
+      console.log(`Server started on http://localhost:${PORT}`)
+    );
   } catch (e) {
     console.log(e);
     console.log("Could not start the server");

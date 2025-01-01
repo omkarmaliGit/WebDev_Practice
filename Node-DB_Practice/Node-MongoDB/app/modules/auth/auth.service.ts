@@ -4,6 +4,8 @@ import { IExcludedPaths } from "./auth.types";
 import { IUser } from "../user/user.types";
 import userService from "../user/user.service";
 import bcrypt from "bcrypt";
+import { ResponseHandler } from "../../utility/response.handler";
+import { AUTH_MESSAGES } from "./auth.constants";
 
 export const createToken = (payload: any) => {
   const { JWT_SECRET } = process.env;
@@ -36,7 +38,7 @@ export const authorize = (excludedPaths: IExcludedPaths[]) => {
 
       next();
     } catch (e) {
-      next({ statusCode: 403, message: "UNAUTHORIZED {invalid token}" });
+      next({ statusCode: 403, message: AUTH_MESSAGES.USER_AUTHORIZE });
     }
   };
 };
@@ -49,54 +51,53 @@ export const permit = (permittedRoles: string[]) => {
 
     next({
       statusCode: 403,
-      message: "UNAUTHORIZED {permission not for this user role}",
+      message: AUTH_MESSAGES.USER_PERMIT,
     });
   };
 };
 
 export const register = async (reqBody: any) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { userName } = reqBody;
-      const users: IUser[] = await userService.userGet();
+  const { userName } = reqBody;
+  const user = await userService.getOneUser_service(userName);
 
-      if (users.find((user) => user.userName === userName)) {
-        return res.status(400).json({ message: "userName already exists" });
-      }
+  if (user) {
+    return new ResponseHandler(null, {
+      statusCode: 403,
+      message: AUTH_MESSAGES.USER_EXIST,
+    });
+  }
 
-      const result = await userService.userAdd(reqBody);
-      return result;
-    } catch (e) {
-      next({ statusCode: 403, message: "Registration Failed" });
-    }
-  };
+  const userdata = await userService.addUser_service(reqBody);
+
+  return new ResponseHandler({
+    Result: userdata,
+    Message: AUTH_MESSAGES.SUCCESSFULL_REGISTRATION,
+  });
 };
 
 export const login = async (reqBody: any) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      console.log("inside login");
-      const { userName, password } = reqBody;
-      const users: IUser[] = await userService.userGet();
-      console.log("inside user");
+  const { userName, password } = reqBody;
 
-      const user = users.find((u) => u.userName === userName);
-      if (!user) {
-        return res.status(401).json({ message: "User Not Found" });
-      }
-      console.log("inside password");
+  const user = await userService.getOneUser_service({ userName });
+  if (!user) {
+    return new ResponseHandler(null, {
+      statusCode: 403,
+      message: AUTH_MESSAGES.USER_NOT_EXIST,
+    });
+  }
 
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return res.status(401).json({ message: "Invalid email or password" });
-      }
-      console.log("inside token");
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return new ResponseHandler(null, {
+      statusCode: 403,
+      message: AUTH_MESSAGES.INVALID_PASS,
+    });
+  }
 
-      const token = createToken({ userName: user.userName, role: user.role });
-      console.log("service after", token);
-      return token;
-    } catch (e) {
-      next({ statusCode: 403, message: "Login Failed" });
-    }
-  };
+  const token = createToken({ userName: user.userName, role: user.role });
+
+  return new ResponseHandler({
+    Token: token,
+    Message: AUTH_MESSAGES.SUCCESSFULL_LOGIN,
+  });
 };
