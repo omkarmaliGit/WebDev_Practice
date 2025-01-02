@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { sign, verify } from "jsonwebtoken";
 import { IExcludedPaths } from "./auth.types";
-import { IUser } from "../user/user.types";
 import userService from "../user/user.service";
 import bcrypt from "bcrypt";
 import { ResponseHandler } from "../../utility/response.handler";

@@ -1,4 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  DeleteDateColumn,
+} from "typeorm";
 
 @Entity("users")
 export class UserEntity {
@@ -19,4 +24,10 @@ export class UserEntity {
 
   @Column()
   password: string;
+
+  @Column({ type: "varchar", nullable: false, default: "USER" })
+  role: string;
+
+  @DeleteDateColumn()
+  deletedAt: Date | null;
 }

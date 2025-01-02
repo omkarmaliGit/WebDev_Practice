@@ -1,38 +1,26 @@
 import { appDataSource } from "../../connection/postgres.connect";
 import { UserEntity } from "./user.schema";
-import { user } from "./user.types";
+import { IUser } from "./user.types";
 
-const userRepository = appDataSource.getRepository(UserEntity);
+const userModel = appDataSource.getRepository(UserEntity);
 
-export const addUser = async (userData: user) => {
-  try {
-    console.log("inside repo");
-    return await userRepository.insert(userData);
-  } catch (error) {
-    throw error;
-  }
-};
+const getUsers_repo = () => userModel.find();
 
-export const findUser = async () => {
-  try {
-    return await userRepository.find();
-  } catch (error) {
-    throw error;
-  }
-};
+const getOneUser_repo = (searchKey: Record<string, any>) =>
+  userModel.findOne({ where: { ...searchKey } });
 
-export const findUserById = async (id: number) => {
-  try {
-    return await userRepository.findOneBy({ id });
-  } catch (error) {
-    throw error;
-  }
-};
+const addUser_repo = (userData: IUser) => userModel.insert(userData);
 
-export const deleteUser = async (id: number) => {
-  try {
-    return await userRepository.delete(id);
-  } catch (error) {
-    throw error;
-  }
+const removeUser_repo = (_id: any) =>
+  userModel.update(_id, { deletedAt: new Date() });
+
+const updateUser_repo = (_id: any, userData: IUser) =>
+  userModel.update(_id, userData);
+
+export default {
+  getUsers_repo,
+  getOneUser_repo,
+  addUser_repo,
+  removeUser_repo,
+  updateUser_repo,
 };

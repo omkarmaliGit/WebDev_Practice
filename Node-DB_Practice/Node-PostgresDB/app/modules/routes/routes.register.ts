@@ -14,8 +14,6 @@ export const registerRoutes = (app: Application) => {
   // app.use(authorize(excludedPaths));
 
   for (let route of routes) {
-    let a = 1;
-    console.log(`inside loop ${a++}`);
     app.use(route.path, route.router);
   }
 

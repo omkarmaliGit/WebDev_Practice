@@ -5,6 +5,7 @@ import { connectToMongo } from "./connections/mongo.connect";
 export const startServer = async () => {
   try {
     const app = express();
+
     await connectToMongo();
 
     registerRoutes(app);

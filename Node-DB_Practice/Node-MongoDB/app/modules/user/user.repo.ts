@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import userModel from "./user.schema";
 import { IUser } from "./user.types";
 
@@ -19,8 +18,6 @@ const removeUser_repo = (_id: any) =>
 
 const updateUser_repo = (_id: any, userData: IUser) =>
   userModel.findByIdAndUpdate(_id, userData);
-
-// const get = () => userModel.find({ firtName: "omkar"});
 
 export default {
   getUsers_repo,
