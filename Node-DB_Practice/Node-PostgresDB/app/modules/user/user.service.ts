@@ -8,9 +8,7 @@ const getUsers_service = async () => {
 };
 
 const getOneUser_service = async (searchKey: Record<string, any>) => {
-  console.log(searchKey);
   const user = await userRepo.getOneUser_repo(searchKey);
-  console.log("=========", user);
   return user;
 };
 

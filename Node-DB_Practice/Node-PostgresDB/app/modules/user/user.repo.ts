@@ -6,8 +6,13 @@ const userModel = appDataSource.getRepository(UserEntity);
 
 const getUsers_repo = () => userModel.find();
 
-const getOneUser_repo = (searchKey: Record<string, any>) =>
-  userModel.findOne(searchKey);
+const getOneUser_repo = (searchKey: Record<string, any>) => {
+  if (searchKey.id) {
+    return userModel.findOneBy(searchKey);
+  } else {
+    return userModel.findOne({ where: searchKey });
+  }
+};
 
 const addUser_repo = (userData: IUser) => userModel.insert(userData);
 

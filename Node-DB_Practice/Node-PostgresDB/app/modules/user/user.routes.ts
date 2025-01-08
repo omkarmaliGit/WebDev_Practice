@@ -54,7 +54,6 @@ UserRouter.delete(
     try {
       const id = req.params.id;
       const result = await userService.removeUser_service(id);
-      // console.log(result);
       res.send(new ResponseHandler(result, USER_MESSAGES.USER_DELETE));
     } catch (e) {
       next(e);
@@ -69,7 +68,6 @@ UserRouter.put(
     try {
       const id = req.params.id;
       const result = await userService.updateUser_service(id, req.body);
-      console.log(result);
       res.send(new ResponseHandler(result, USER_MESSAGES.USER_UPDATE));
     } catch (e) {
       next(e);

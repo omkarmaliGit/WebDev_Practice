@@ -57,9 +57,7 @@ export const permit = (permittedRoles: string[]) => {
 
 export const register = async (reqBody: any) => {
   const { userName } = reqBody;
-  console.log(userName, "-----------");
-  const user = await userService.getOneUser_service(userName);
-  console.log(user);
+  const user = await userService.getOneUser_service({ userName: userName });
 
   if (user) {
     return new ResponseHandler(null, {
