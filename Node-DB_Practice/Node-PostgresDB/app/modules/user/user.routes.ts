@@ -9,7 +9,7 @@ export const UserRouter = Router();
 
 UserRouter.get(
   "/",
-  // permit([USER_ROLE.ADMIN, USER_ROLE.SEMIADMIN]),
+  permit([USER_ROLE.ADMIN, USER_ROLE.SEMIADMIN]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await userService.getUsers_service();
@@ -22,7 +22,7 @@ UserRouter.get(
 
 UserRouter.get(
   "/:id",
-  // permit([USER_ROLE.USER, USER_ROLE.ADMIN, USER_ROLE.SEMIADMIN]),
+  permit([USER_ROLE.USER, USER_ROLE.ADMIN, USER_ROLE.SEMIADMIN]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
@@ -36,7 +36,7 @@ UserRouter.get(
 
 UserRouter.post(
   "/",
-  // permit([USER_ROLE.ADMIN, USER_ROLE.SEMIADMIN]),
+  permit([USER_ROLE.ADMIN, USER_ROLE.SEMIADMIN]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await userService.addUser_service(req.body);
@@ -49,7 +49,7 @@ UserRouter.post(
 
 UserRouter.delete(
   "/:id",
-  // permit([USER_ROLE.ADMIN]),
+  permit([USER_ROLE.ADMIN]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
@@ -63,7 +63,7 @@ UserRouter.delete(
 
 UserRouter.put(
   "/:id",
-  // permit([USER_ROLE.USER]),
+  permit([USER_ROLE.USER]),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;

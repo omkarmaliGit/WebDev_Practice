@@ -77,7 +77,7 @@ export const register = async (reqBody: any) => {
 export const login = async (reqBody: any) => {
   const { userName, password } = reqBody;
 
-  const user = await userService.getOneUser_service({ userName });
+  const user = await userService.getOneUser_service({ userName: userName });
   if (!user) {
     return new ResponseHandler(null, {
       statusCode: 403,
