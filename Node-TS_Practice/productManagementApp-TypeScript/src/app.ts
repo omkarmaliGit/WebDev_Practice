@@ -1,13 +1,13 @@
 import express, { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
-import multer, { FileFilterCallback } from "multer";
+import multer from "multer";
 
 const app = express();
 const filePath = path.join(__dirname, "products.json");
 
 // Ensure public/images directory exists
-const imagesDir = path.join(__dirname,"..", "public", "images");
+const imagesDir = path.join(__dirname, "..", "public", "images");
 if (!fs.existsSync(imagesDir)) {
   fs.mkdirSync(imagesDir, { recursive: true });
 }
@@ -15,11 +15,11 @@ if (!fs.existsSync(imagesDir)) {
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname,"..", "public")));
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Configure Multer for image uploads
 const storage = multer.diskStorage({
-  destination: path.join(__dirname,"..", "public", "images"),
+  destination: path.join(__dirname, "..", "public", "images"),
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
@@ -28,14 +28,26 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Helper functions to load and save products
-function loadProducts(): Array<{ id: number; name: string; description: string; image: string }> {
+function loadProducts(): Array<{
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+}> {
   if (fs.existsSync(filePath)) {
     return JSON.parse(fs.readFileSync(filePath, "utf-8"));
   }
   return [];
 }
 
-function saveProducts(products: Array<{ id: number; name: string; description: string; image: string }>): void {
+function saveProducts(
+  products: Array<{
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+  }>
+): void {
   fs.writeFileSync(filePath, JSON.stringify(products, null, 2));
 }
 
