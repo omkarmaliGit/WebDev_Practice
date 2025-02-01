@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import multer from "multer";
 
+console.log(__dirname);
 const app = express();
 const filePath = path.join(__dirname, "products.json");
 
