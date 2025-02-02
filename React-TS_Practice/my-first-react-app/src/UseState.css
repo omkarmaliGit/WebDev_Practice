@@ -1,0 +1,23 @@
+.counter {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 300px;
+}
+
+.counter button {
+  background-color: rgb(21, 95, 98);
+  padding: 10px 20px;
+  border: 1px solid white;
+  border-radius: 12px;
+  color: white;
+}
+
+.counter button:nth-of-type(3) {
+  background-color: rgb(172, 57, 18);
+}
+
+.counter h1 span {
+  color: blueviolet;
+}

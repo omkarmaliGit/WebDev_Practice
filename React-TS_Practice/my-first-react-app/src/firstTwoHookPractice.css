@@ -1,0 +1,30 @@
+.timer-container {
+  text-align: center;
+  margin: 20px;
+}
+
+h1 {
+  margin-top: 30vh;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
