@@ -19,6 +19,7 @@ import { First_Page } from "./First_Page";
 import { Second_Page } from "./Second_Page";
 import { UseMemo } from "./UseMemo";
 import { ThemeProvider } from "./UseContext/ThemeProvider";
+import { UseContext } from "./UseContext/UseContext";
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
             element={<Second_Page Title={"React-Js"} Disc={"React cards"} />}
           />
           <Route path="use-memo" element={<UseMemo />} />
+          <Route
+            path="use-context"
+            element={
+              <ThemeProvider>
+                <UseContext />
+              </ThemeProvider>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
